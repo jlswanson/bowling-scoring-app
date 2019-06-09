@@ -1,0 +1,11 @@
+// overrides
+$white: #f3f3f3;
+$primary: #5eafde;
+$secondary: #ff0000;
+
+$input-btn-padding-y-sm: 0.15rem;
+$input-btn-padding-x-sm: 1rem;
+
+// Include Bootstrap and BootstrapVue SCSS files
+@import '~bootstrap/scss/bootstrap.scss';
+@import '~bootstrap-vue/src/index.scss';
