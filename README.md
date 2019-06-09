@@ -1,5 +1,6 @@
 # Brooklyn  
-Brooklyn is an application that allows you to enter your bowling scores, frame by frame, and keeps track of your current total score following bowling scoring rules.
+Brooklyn is an application that allows you to enter your bowling scores, frame by frame, and keeps track of your current total score following bowling scoring rules.    
+Brooklyn is built using the [Vue CLI](https://cli.vuejs.org) and [Bootstrap Vue](https://bootstrap-vue.js.org/).
 
 ## Project setup
 ```
