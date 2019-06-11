@@ -2,7 +2,9 @@
     <b-container>
         <b-row>
             <b-col class="text-center">
-                <img src="../assets/logo.png" alt="Brooklyn Logo" title="Welcome to the Brooklyn application!">
+                <img src="../assets/logo.png"
+                    alt="Brooklyn Logo"
+                    title="Welcome to the Brooklyn application!">
                 <h1>Welcome!</h1>
             </b-col>
         </b-row>
@@ -15,7 +17,9 @@
                         </b-form-input>
                     </b-form-group>
                     
-                    <b-button size="sm" variant="secondary">Let's go!</b-button>
+                    <b-button size="sm"
+                        variant="secondary"
+                        @click="setAndContinue">Let's go!</b-button>
                 </b-form>
             </b-col>
         </b-row>
@@ -23,6 +27,8 @@
 </template>
 
 <script>
+import { mapMutations } from 'vuex'
+
 export default {
     name: 'Welcome',
     data() {
@@ -31,7 +37,16 @@ export default {
                 name: '',
             }
         }
-    }
+    },
+    methods: {
+        ...mapMutations([
+            'setUsername',
+        ]),
+        setAndContinue: function() {
+            this.setUsername(this.form.name);
+            this.$router.push({name: 'scores'});
+        }
+    },
 }
 </script>
 

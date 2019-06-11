@@ -1,20 +1,16 @@
 <template>
   <div id="app">
-    <Main />
+      <router-view />
   </div>
 </template>
 
 <script>
-import Main from './pages/Main.vue'
 
 export default {
   name: 'app',
-  components: {
-    Main,
-  }
 }
 </script>
 
 <style lang="scss">
-  @import './styles/main.scss';
+@import './styles/main.scss';
 </style>
