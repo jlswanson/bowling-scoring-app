@@ -1,5 +1,5 @@
 <template>
-    <b-container>
+    <b-container class="scoring">
         <b-row class="align-items-end">
             <b-col>
                 <h3 v-if="username !== ''">Hi, {{username}}!</h3>
@@ -12,6 +12,12 @@
             </b-col>
         </b-row>
 
+        <b-row v-if="error !== null" class="error">
+            <b-col>
+                <b-alert show dismissible fade variant="light" class="small">{{error}}</b-alert>
+            </b-col>
+        </b-row>
+
         <b-row class="text-center current-score">
             <b-col>
                 <h3>Current Score:</h3>
@@ -19,9 +25,7 @@
             </b-col>
         </b-row>
 
-        <add-score-modal :frame="frameNumber" />
-
-        <b-button @click="computeScore">Click me</b-button>
+        <add-score-modal @frameScoreSubmitted="updateScore" />
     </b-container>
 </template>
 
@@ -35,14 +39,15 @@ export default {
     },
     data() {
         return {
-            frameNumber: 3,
-            currentScore: 53,
             scoreCode: '',
         }
     },
     computed: {
         ...mapState([
             'username',
+            'currentScore',
+            'error',
+            'frameNumber',
         ]),
     },
     methods: {
@@ -50,18 +55,24 @@ export default {
             'fetchScore',
         ]),
 
-        updateScoreCode() {
+        updateScore(value) {
+            if(value.ball1 === 'X') {
+                this.scoreCode += value.ball1;
+            } else {
+                this.scoreCode += value.ball1 + value.ball2;
+            }
 
+            this.fetchScore(this.scoreCode);
         },
-
-        async computeScore() {
-            await this.fetchScore('2354S');
-        }
     },
 }
 </script>
 
 <style lang="scss" scoped>
+    .error {
+        margin-top: 3em;
+    }
+
     .logo {
         text-align: right;
 
@@ -75,6 +86,8 @@ export default {
     }
 
     .current-score {
+        margin: 3em 0 2em;
+
         p {
             font-size: 8em;
             line-height: 1;

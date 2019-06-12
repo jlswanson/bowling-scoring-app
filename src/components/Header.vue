@@ -26,7 +26,8 @@ export default {
 
     header {
         background-color: #262626;
-        box-shadow: 0px 3px 5px 0px rgba(41, 41, 41, .3)
+        box-shadow: 0px 3px 5px 0px rgba(41, 41, 41, .3);
+        margin-bottom: 3em;
     }
 
     p {

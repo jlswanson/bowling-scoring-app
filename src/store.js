@@ -7,6 +7,8 @@ export default new Vuex.Store({
   state: {
     username: '',
     currentScore: 0,
+    error: null,
+    frameNumber: 1,
   },
   mutations: {
     setUsername(state, name) {
@@ -14,23 +16,35 @@ export default new Vuex.Store({
     },
 
     setScore(state, score) {
-      state.currentScore += score;
+      state.currentScore = score;
+    },
+
+    setError(state, message) {
+      state.error = message;
+    },
+
+    clearError(state) {
+      state.error = null;
+    },
+
+    incrementFrameNumber(state) {
+      state.frameNumber++;
     }
   },
   actions: {
     fetchScore({ commit }, payload) {
       fetch('https://bowlingscoring.azurewebsites.net/api/CalculateBowlingScore/' + payload + '?code=IY8P0FLC7zyMfi7VWxRQBlcCoozjuz7a8y7ErrCXgdPA75yOxWhyng==')
       .then((response) => {
-        if(!response.ok) {
-          throw Error(response.statusText);
-        }
-        return response;
+        return response.json();
       }).then((response) => {
-        let data = response.json();
-        commit('setScore', data.score);
-      })
-      .catch((err) => {
-        console.log(err);
+        commit('clearError');
+        
+        if(response.error === null) {
+          commit('setScore', response.score);
+          commit('incrementFrameNumber');
+        } else {
+          commit('setError', response.error);
+        }
       })
     },
   },
