@@ -42,7 +42,7 @@ export default {
         ...mapMutations([
             'setUsername',
         ]),
-        setAndContinue: function() {
+        setAndContinue() {
             this.setUsername(this.form.name);
             this.$router.push({name: 'scores'});
         }

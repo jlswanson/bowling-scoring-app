@@ -18,12 +18,7 @@
             </b-col>
         </b-row>
 
-        <b-row class="text-center current-score">
-            <b-col>
-                <h3>Current Score:</h3>
-                <p>{{currentScore}}</p>
-            </b-col>
-        </b-row>
+        <total-score text="Current Score:" />
 
         <add-score-modal @frameScoreSubmitted="updateScore" />
     </b-container>
@@ -32,10 +27,13 @@
 <script>
 import { mapState, mapActions } from 'vuex'
 import AddScoreModal from './AddScoreModal.vue'
+import TotalScore from './TotalScore.vue'
 
 export default {
+    name: 'Scoring',
     components: {
         AddScoreModal,
+        TotalScore,
     },
     data() {
         return {
@@ -45,7 +43,6 @@ export default {
     computed: {
         ...mapState([
             'username',
-            'currentScore',
             'error',
             'frameNumber',
         ]),
@@ -56,13 +53,25 @@ export default {
         ]),
 
         updateScore(value) {
-            if(value.ball1 === 'X') {
+            // TODO: This doesn't properly account for input edge cases.
+            // Update if form validation can't be completed in time.
+            if (value.ball1 === 'X') {
                 this.scoreCode += value.ball1;
             } else {
                 this.scoreCode += value.ball1 + value.ball2;
             }
 
-            this.fetchScore(this.scoreCode);
+            // If a strike or spare is recorded in frame 10, add third ball value to scoreCode
+            if (this.frameNumber === 10 && (value.ball1 === 'X' || value.ball2 === 'S')) {
+                this.scoreCode += value.ball3;
+            }
+
+            let payload = {
+                string: this.scoreCode,
+                increment: true
+            }
+
+            this.fetchScore(payload);
         },
     },
 }
@@ -83,15 +92,6 @@ export default {
 
     h3, p {
         margin-bottom: 0;
-    }
-
-    .current-score {
-        margin: 3em 0 2em;
-
-        p {
-            font-size: 8em;
-            line-height: 1;
-        }
     }
 </style>
 

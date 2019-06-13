@@ -8,6 +8,7 @@
             :title="'Add Scores for Frame ' + frameNumber"
             @cancel="cancelModal()"
             @ok="confirmModal()">
+            
             <!-- <div class="small">
                 <p>How to enter your score:</p>
                 <p>For a strike, enter an <span class="font-weight-bold">X</span> under Ball 1.</p>
@@ -24,7 +25,7 @@
                     </b-form-radio-group>
                 </b-form-group>
 
-                <b-form-group v-if="selected === 'spare' || selected === 'numbers'">
+                <b-form-group v-if="(selected === 'spare' || selected === 'numbers') && frameNumber !== 10">
                     <b-form-group label="Ball 1">
                         <b-form-input v-model="form.ball1">
                         </b-form-input>
@@ -32,6 +33,22 @@
                     <b-form-group label="Ball 2">
                         <b-form-input v-model="form.ball2"
                             :disabled="selected === 'spare'">
+                        </b-form-input>
+                    </b-form-group>
+                </b-form-group>
+
+                <b-form-group v-if="(selected === 'spare' || selected === 'strike') && frameNumber === 10">
+                    <b-form-group label="Ball 1">
+                        <b-form-input v-model="form.ball1">
+                        </b-form-input>
+                    </b-form-group>
+                    <b-form-group label="Ball 2">
+                        <b-form-input v-model="form.ball2"
+                            :disabled="selected === 'spare'">
+                        </b-form-input>
+                    </b-form-group>
+                    <b-form-group label="Ball 3">
+                        <b-form-input v-model="form.ball3">
                         </b-form-input>
                     </b-form-group>
                 </b-form-group>
@@ -50,6 +67,7 @@ export default {
             form: {
                 ball1: null,
                 ball2: null,
+                ball3: null,
             },
             selected: '',
         }
@@ -71,29 +89,36 @@ export default {
              * than 10, and the second field must be the letter 'S'
              * 
              * - If a strike is recorded, the first field must be a letter 'X',
-             * and the second field must be blank or 0
+             * and the second field must be blank
             */
         },
+
         clearForm() {
             this.form.ball1 = null;
             this.form.ball2 = null;
+            this.form.ball3 = null;
         },
+
         selectedStrike() {
             this.clearForm();
             this.form.ball1 = 'X';
         },
+
         selectedSpare() {
             this.clearForm();
             this.form.ball2 = 'S';
         },
+
         selectedNumerical() {
             this.clearForm();
         },
+
         cancelModal() {
             this.clearForm();
             this.selected = '';
         },
-        confirmModal(event) {
+
+        confirmModal() {
             this.$emit('frameScoreSubmitted', this.form);
             this.clearForm();
             this.selected = '';

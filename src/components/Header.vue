@@ -1,23 +1,29 @@
 <template>
     <header class="row">
-        <b-col>
+        <b-col class="logo">
             <router-link to="/">Brooklyn</router-link>
         </b-col>
 
-        <b-col>
-            <button v-if="isBeingScored">End Game</button>
+        <b-col class="end-game">
+            <end-game />
         </b-col>
     </header>
 </template>
 
 <script>
+import { mapState } from 'vuex'
+import EndGame from './EndGame.vue'
+
 export default {
     name: 'Header',
+    components: {
+        EndGame,
+    },
     computed: {
-        isBeingScored: function() {
-            return false;
-        }
-    }
+        ...mapState([
+            'frameNumber'
+        ]),
+    },
 }
 </script>
 
@@ -30,19 +36,31 @@ export default {
         margin-bottom: 3em;
     }
 
-    a {
-        color: $white;
-        display: block;
-        font-family: 'Sacramento', Georgia, 'Times New Roman', Times, serif;
-        font-size: 2em;
-        margin: 0;
-        padding: .35em 1em;
-        transition: all .3s ease-in-out;
-
-        &:hover, &:focus, &:active {
+    .logo {
+        a {
             color: $white;
-            opacity: .5;
-            text-decoration: none;
+            display: block;
+            font-family: 'Sacramento', Georgia, 'Times New Roman', Times, serif;
+            font-size: 2em;
+            margin: 0;
+            padding: .35em 1em;
+            transition: all .3s ease-in-out;
+
+            &:hover, &:focus, &:active {
+                color: $white;
+                opacity: .5;
+                text-decoration: none;
+            }
+        }
+    }
+
+    .end-game {
+        display: flex;
+        align-items: center;
+
+        a {
+            margin-left: auto;
+            margin-right: 1em;
         }
     }
 </style>
