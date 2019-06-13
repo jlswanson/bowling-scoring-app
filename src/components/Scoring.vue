@@ -53,9 +53,7 @@ export default {
         ]),
 
         updateScore(value) {
-            // TODO: This doesn't properly account for input edge cases.
-            // Update if form validation can't be completed in time.
-            if (value.ball1 === 'X') {
+            if (value.ball1 === 'X' && this.frameNumber !== 10) {
                 this.scoreCode += value.ball1;
             } else {
                 this.scoreCode += value.ball1 + value.ball2;
