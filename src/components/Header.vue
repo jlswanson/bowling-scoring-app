@@ -1,7 +1,7 @@
 <template>
     <header class="row">
         <b-col>
-            <p>Brooklyn</p>
+            <router-link to="/">Brooklyn</router-link>
         </b-col>
 
         <b-col>
@@ -30,12 +30,20 @@ export default {
         margin-bottom: 3em;
     }
 
-    p {
+    a {
         color: $white;
+        display: block;
         font-family: 'Sacramento', Georgia, 'Times New Roman', Times, serif;
         font-size: 2em;
         margin: 0;
         padding: .35em 1em;
+        transition: all .3s ease-in-out;
+
+        &:hover, &:focus, &:active {
+            color: $white;
+            opacity: .5;
+            text-decoration: none;
+        }
     }
 </style>
 
