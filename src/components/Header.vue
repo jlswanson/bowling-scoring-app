@@ -58,7 +58,7 @@ export default {
         display: flex;
         align-items: center;
 
-        a {
+        button {
             margin-left: auto;
             margin-right: 1em;
         }

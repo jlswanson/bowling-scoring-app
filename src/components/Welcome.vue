@@ -10,12 +10,14 @@
         </b-row>
         <b-row>
             <b-col class="text-center">
-                <p>Who's playing?</p>
                 <b-form>
-                    <b-form-group>
-                        <b-form-input v-model="form.name">
-                        </b-form-input>
-                    </b-form-group>
+                    <div class="username-input">
+                        <p>Who's playing?</p>
+                        <b-form-group>
+                            <b-form-input v-model="form.name">
+                            </b-form-input>
+                        </b-form-group>
+                    </div>
                     
                     <b-button size="sm"
                         variant="secondary"
@@ -58,6 +60,7 @@ export default {
     }
 
     img {
+        margin-bottom: 1em;
         max-width: 10em;
     }
 
@@ -67,7 +70,21 @@ export default {
     }
 
     p {
-        font-size: 1.5rem;
+        font-size: 1.2rem;
+    }
+
+    .username-input {
+        margin-top: 2em;
+    }
+
+    input {
+        display: block;
+        margin: auto;
+        max-width: 20rem;
+    }
+
+    button {
+        margin-top: .5em;
     }
 </style>
 

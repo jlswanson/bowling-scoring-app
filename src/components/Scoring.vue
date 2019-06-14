@@ -3,7 +3,7 @@
         <b-row class="align-items-end">
             <b-col>
                 <h3 v-if="username !== ''">Hi, {{username}}!</h3>
-                <p>Current frame: {{frameNumber}}</p>
+                <p v-if="frameNumber < 11">Current frame: {{frameNumber}}</p>
             </b-col>
             <b-col class="logo">
                 <img src="../assets/logo.png"
@@ -20,7 +20,12 @@
 
         <total-score text="Current Score:" />
 
-        <add-score-modal @frameScoreSubmitted="updateScore" />
+        <add-score-modal @frameScoreSubmitted="updateScore"
+            v-if="frameNumber < 11" />
+
+        <b-row class="text-center">
+            <end-game v-if="frameNumber > 10" />
+        </b-row>
     </b-container>
 </template>
 
@@ -28,12 +33,14 @@
 import { mapState, mapActions } from 'vuex'
 import AddScoreModal from './AddScoreModal.vue'
 import TotalScore from './TotalScore.vue'
+import EndGame from './EndGame.vue'
 
 export default {
     name: 'Scoring',
     components: {
         AddScoreModal,
         TotalScore,
+        EndGame,
     },
     data() {
         return {
@@ -90,6 +97,13 @@ export default {
 
     h3, p {
         margin-bottom: 0;
+    }
+
+    .text-center {
+        .btn {
+            display: block;
+            margin: auto;
+        }
     }
 </style>
 
